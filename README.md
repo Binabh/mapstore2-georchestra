@@ -30,15 +30,13 @@ To get more informations about nodejs install :
 
 * Instructions to install Nodejs from package manager : [here](https://nodejs.org/en/download/package-manager/)
 * Download source : [here](https://nodejs.org/en/download/)
-* Download a specific version : [here](https://nodejs.org/dist/) (v20 is required)
+* Download a specific version : [here](https://nodejs.org/dist/) (Node 22 is the project baseline; Node 24 is also supported)
 
 #### 4. Install Java SDK
 
-If needed you can download Java here :
-
-* [8 (min)](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-* [9 (recommended)](https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html)
-* [11 (max)](https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase11-5116896.html)
+Use **JDK 17** for builds and local Cargo. JDK 21 is also covered by CI.
+MapStore 2026.03 uses Jakarta APIs and cannot run on Java 8/11 or Tomcat 9.
+Set `JAVA_HOME` to the selected JDK before invoking Maven.
 
 #### 5. Install Maven
 
@@ -59,12 +57,15 @@ Where *version_identifier* is an optional identifier of the generated war that w
 
 Deploy the generated `mapstore.war` file (in web/target) to your favorite J2EE container (e.g. Tomcat).
 
-Tomcat versions 7.x, 8.x and 9.x are supported.
-The latest of each can be downloaded from:
+Deploy on **Tomcat 10.1 / Java 17**. Cargo and Docker use Tomcat 10.1.55.
+Use a dedicated compatible container when other geOrchestra applications still
+require Tomcat 9. Enable compression in the Tomcat connector or reverse proxy.
 
-* [7.x](https://tomcat.apache.org/download-70.cgi)
-* [8.x](https://tomcat.apache.org/download-80.cgi)
-* [9.x](https://tomcat.apache.org/download-90.cgi)
+This checkout targets **2026.03.xx preview**, pinned to MapStore commit
+`3705010121b05029e321f1297f89c0e1a6eca296`; it is not a published 2026.03.00 release.
+Read [the upgrade checklist](docs/technical_guides/installation/upgrade-2026.03.en.md)
+and [database migration instructions](db-migrations.md) before deployment.
+The database instructions are manual; builds never execute migrations.
 
 ## Contributing to the documentation
 
